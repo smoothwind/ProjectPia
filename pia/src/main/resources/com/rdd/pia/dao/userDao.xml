@@ -1,0 +1,90 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rdd.pia.dao.UserDao">
+    <resultMap id="WholeUserInfo" type="com.rdd.pia.model.PiaUser">
+        <id property="idUser" javaType="Integer" jdbcType="INTEGER" column="id_user" />
+        <result property="userName" column="user_name"/>
+        <result property="password" column="password"/>
+        <result property="alias" column="alias"/>
+        <result property="eMail" column="e_mail"/>
+        <result property="gender" javaType="Integer" jdbcType="INTEGER" column="gender"/>
+        <result property="address" column="address"/>
+        <result property="bio" column="bio"/>
+        <result property="updateTime" column="update_time" javaType="java.util.Date"/>
+    </resultMap>
+
+    <insert id="createUser" useGeneratedKeys="true" keyProperty="user.idUser" keyColumn="id_user" parameterType="com.rdd.model.piaUser">
+
+        INSERT INTO user
+        (`user_name`,
+        `alias`,
+        `password`,
+        `e_mail`,
+        `gender`,
+        `address`,
+        `bio`)
+        VALUES
+        (#{user.userName},#{user.alias},#{user.password},#{user.eMail},#{user.gender},#{user.address},#{user.bio}
+         );
+
+    </insert>
+    <insert id="archiveUserById">
+     INSERT INTO user_archive
+         (`id_user`,`user_name`,
+          `alias`,
+          `password`,
+          `e_mail`,
+          `gender`,
+          `address`,
+          `bio`,
+          `archive_reason`)
+          select `id_user`,`user_name`,
+                 `alias`,
+                 `password`,
+                 `e_mail`,
+                 `gender`,
+                 `address`,
+                 `bio`,
+                 #{archiveReason}
+          from user
+       where  id_user = #{id};
+
+
+
+
+    </insert>
+    <update id="updateUser" parameterType="com.rdd.pia.model.PiaUser">
+        UPDATE user
+        SET password = #{password},
+            alias = #{user.alias},
+            e_mail = #{user.eMail},
+            gender = #{user.gender},
+            address = #{user.address},
+            bio = #{user.bio}
+        WHERE `id_user` = #{user.idUser}
+    </update>
+    <delete id="deleteUserById" parameterType="com.rdd.pia.model.PiaUser">
+
+    </delete>
+
+    <!--
+
+        this.userName = userName;
+        this.password = password;
+        this.idUser = idUser;
+        this.alias = alias;
+        this.eMail = eMail;
+        this.gender = gender;
+        this.address = address;
+        this.bio = bio;
+        this.updateTime = updateTime;
+    -->
+
+    <select id="getUserById" resultMap="WholeUserInfo">
+        select  id_user , user_name , password, alias, e_mail, gender, address, bio, update_time
+        from user where id_user = #{id}
+    </select>
+    <select id="getUserByName" resultMap="WholeUserInfo">
+        select  id_user , user_name , password, alias, e_mail, gender, address, bio,  update_time
+        from user where user_name = #{name}
+    </select>
+</mapper>

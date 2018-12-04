@@ -1,0 +1,29 @@
+spring:
+  cache:
+    redis:
+      time-to-live: 3600s #默认为从不过期
+  datasource:
+    url: jdbc:mysql://127.0.0.1/app?useUnicode=true&serverTimezone=UTC&characterEncoding=utf-8&allowMultiQueries=true
+    username: admin
+    password: admin
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+mybatis.configuration.mapUnderscoreToCamelCase: true
+
+logging:
+  file: target/app.log
+  level:
+    ROOT: WARN
+    com.rdd.pia: TRACE
+    com.rdd: INFO #只有为INFO时才能在控制台显示默认配置的一些打印信息，包括密码
+
+
+#redis:
+#  host: localhost
+#  port:6379
+ # jedis:
+ #   pool:
+  #    max-active: 5
+#      max-wait: 10000
