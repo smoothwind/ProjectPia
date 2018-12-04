@@ -12,7 +12,7 @@
         <result property="updateTime" column="update_time" javaType="java.util.Date"/>
     </resultMap>
 
-    <insert id="createUser" useGeneratedKeys="true" keyProperty="user.idUser" keyColumn="id_user" parameterType="com.rdd.model.piaUser">
+    <insert id="createUser" useGeneratedKeys="true" keyProperty="user.idUser" keyColumn="id_user" parameterType="com.rdd.pia.model.PiaUser">
 
         INSERT INTO user
         (`user_name`,
@@ -48,9 +48,6 @@
           from user
        where  id_user = #{id};
 
-
-
-
     </insert>
     <update id="updateUser" parameterType="com.rdd.pia.model.PiaUser">
         UPDATE user
@@ -62,8 +59,8 @@
             bio = #{user.bio}
         WHERE `id_user` = #{user.idUser}
     </update>
-    <delete id="deleteUserById" parameterType="com.rdd.pia.model.PiaUser">
-
+    <delete id="deleteUserById" parameterType="int">
+         delete from user where  id_user = #{id}
     </delete>
 
     <!--

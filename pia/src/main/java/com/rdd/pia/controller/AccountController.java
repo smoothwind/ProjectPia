@@ -52,6 +52,19 @@ public class AccountController {
         }
 
         Map<String,PiaUser> map = new HashMap<>();
+        if (userService.createUser(piaUser)){
+            map.put("Message",piaUser);
+            if (log.isTraceEnabled())
+            {
+                log.trace("createUser(): 创建成功");
+            }
+            return map;
+        }
+        map.put("Error",null);
+        if (log.isTraceEnabled())
+        {
+            log.trace("createUser(): 创建失败");
+        }
         return map;
     }
 
