@@ -16,8 +16,6 @@ public class PiaUser {
     private Integer idUser;
     private String alias;
     private String eMail;
-    @Min(0)
-    @Max(2)
     private Integer gender;
     private String address;
     private String bio;
@@ -27,13 +25,13 @@ public class PiaUser {
         this.idUser = idUser;
     }
 
-    public PiaUser(Integer idUser, String userName, String password,  String alias, String eMail, @Min(0) @Max(2) Integer gender, String address, String bio, java.sql.Date updateTime) {
+    public PiaUser(Integer idUser,String userName, String password,  String alias, String eMail, Integer gender, String address, String bio, java.sql.Timestamp updateTime) {
         this.userName = userName;
         this.password = password;
         this.idUser = idUser;
         this.alias = alias;
         this.eMail = eMail;
-        this.gender = gender;
+        this.gender =  gender;
         this.address = address;
         this.bio = bio;
         this.updateTime = updateTime;

@@ -7,7 +7,6 @@ import com.rdd.pia.model.PiaUser;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -37,6 +36,12 @@ public class UserService {
      * @return  成功 True
      */
     public boolean createUser(PiaUser user){
+        if (getUserByName(user.getUserName())!= null) {
+            if (log.isTraceEnabled()){
+                log.trace("createUser():用户已存在！");
+            }
+            return false;
+        }
         return userDao.createUser(user);
     }
 

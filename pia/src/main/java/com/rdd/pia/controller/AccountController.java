@@ -1,12 +1,10 @@
 package com.rdd.pia.controller;
 
-import com.rdd.pia.dao.UserDao;
 import com.rdd.pia.model.PiaUser;
 import com.rdd.pia.services.UserService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -27,12 +25,12 @@ public class AccountController {
     @GetMapping("user/{userId}")
     public PiaUser getUser(@PathVariable("userId") int id){
         if(log.isTraceEnabled()){
-            log.trace("getUser():获取到用户");
+            log.trace("getUser():获取用户");
         }
         return userService.getUserById(id);
     }
 
-    @PostMapping("username/{userName}")
+    @GetMapping("username/{userName}")
     public PiaUser getUser(@PathVariable("userName") String name){
         if(log.isTraceEnabled()){
             log.trace("getUser():获取到用户");
@@ -67,6 +65,6 @@ public class AccountController {
         }
         return map;
     }
-
+  //org.apache.ibatis.type.EnumOrdinalTypeHandler
 
 }

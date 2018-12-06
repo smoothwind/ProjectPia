@@ -9,7 +9,6 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
-  mybatis:
 
 
 mybatis.configuration.mapUnderscoreToCamelCase: true
@@ -17,7 +16,7 @@ mybatis.configuration.mapUnderscoreToCamelCase: true
 logging:
   file: target/app.log
   level:
-    ROOT: WARN
+    ROOT: INFO
     com.rdd.pia: TRACE
     com.rdd: INFO #只有为INFO时才能在控制台显示默认配置的一些打印信息，包括密码
 
@@ -28,4 +27,5 @@ logging:
  # jedis:
  #   pool:
   #    max-active: 5
+
 #      max-wait: 10000
