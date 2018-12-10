@@ -9,7 +9,7 @@ import java.util.Date;
  * @author mic
  */
 @Entity //JPA用的到
-@Table(name = "user",schema = "app")
+@Table(name = "user")
 public class PiaUser {
 
     @Column(name = "user_name")

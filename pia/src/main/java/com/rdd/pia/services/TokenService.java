@@ -2,6 +2,8 @@ package com.rdd.pia.services;
 
 
 import com.rdd.pia.model.PiaUser;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,6 +15,7 @@ import java.util.*;
  * @author mic
  */
 public class TokenService {
+    private final static Log log = LogFactory.getLog(TokenService.class);
     //一般是把token和用户对应关系放置在数据库或高速缓存(例如readis/memcache等),放在一个单例的成员变量里只适合很小规模的情形
     //TODO: 采用redis缓存方案改写token存储方案
     private Map<String, UserDetails> tokenMap = new HashMap<>();
@@ -48,10 +51,17 @@ public class TokenService {
         }*/
         //按照名称查找用户
         PiaUser piaUser = userService.getUserByName(userName);
+
+        if(log.isTraceEnabled()){
+            log.trace(piaUser);
+        }
         //todo:改写密码认证方式
         if (piaUser != null && piaUser.getPassword().equals(password))
         {
             ud =  createUser(userName,password,new String[]{"qurey"});
+            if(log.isTraceEnabled()){
+                log.trace(ud.toString());
+            }
         }
 
         if(ud != null){

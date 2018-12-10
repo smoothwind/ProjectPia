@@ -30,8 +30,8 @@ logging:
   level:
     ROOT: INFO
     com.rdd.pia: INFO
-    com.rdd: INFO #只有为INFO时才能在控制台显示默认配置的一些打印信息，包括密码
-
+    com.rdd.pia.filter: INFO
+    com.rdd.pia.services: INFO
 
 #redis:
 #  host: localhost

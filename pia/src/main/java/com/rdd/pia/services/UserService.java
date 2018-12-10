@@ -26,11 +26,11 @@ public class UserService {
     @Autowired
     private ArchivePiaUserJapRepository archiveUserJpaRepository;
 
-    public PiaUser getUserById(int id){
+    public PiaUser getUserById(Integer id){
         if (log.isTraceEnabled()){
             log.trace("getUserById():"+"获取用户");
         }
-        return piaUserRepository.findById(id);
+        return piaUserRepository.findByIdUser(id);
     }
 
     public PiaUser getUserByName(String name) {
@@ -44,7 +44,7 @@ public class UserService {
         if (log.isTraceEnabled()){
             log.trace("updateUser():"+"更新用户信息");
         }
-        PiaUser tmp = piaUserRepository.findById(piaUser.getIdUser());
+        PiaUser tmp = piaUserRepository.findByIdUser(piaUser.getIdUser());
         if(piaUser.equals(tmp) && piaUser != null && tmp != null){
             archiveUserJpaRepository.save(new ArchivedPiaUser(tmp));
             piaUserRepository.updateUser(piaUser.getAlias(),
@@ -85,7 +85,7 @@ public class UserService {
      * @return
      */
     public  boolean archiveUserById(Integer id,ArchiveReason reason) {
-        PiaUser user = piaUserRepository.findById(id);
+        PiaUser user = piaUserRepository.findByIdUser(id);
         ArchivedPiaUser archivedPiaUser = new ArchivedPiaUser(user);
         archivedPiaUser.setArchiveReason(reason);
         if (archivedPiaUser != null) {

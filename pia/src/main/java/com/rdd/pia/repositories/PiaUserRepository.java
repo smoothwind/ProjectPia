@@ -19,24 +19,26 @@ public interface PiaUserRepository extends CrudRepository<PiaUser,Long> {
     /** 返回用户
      * @param idUser
      * @return
+     * Warning: 如果方法不写具体的SQl 在@Query注解里，那么请遵守jpa方法命名规则
      */
    @Query
-   PiaUser findById(Integer idUser);
+   PiaUser findByIdUser(Integer idUser);
 
     /** 返回用户
-     * @param username
+     * @param userName
      * @return
      */
    @Query
-   PiaUser findByUserName(String username);
+   PiaUser findByUserName(String userName);
 
 
     /** 获取所有归档用户信息
-     * @param username
+     * @param userName
      * @return
      */
-    @Query("SELECT id_user,  user_name, alias,   password,  e_mail,   gender, address,    bio  from  user u where u.user_name = ?1")
-   List<PiaUser> findAllByUserName(String username);
+    @Query(value = "SELECT id_user,  user_name, alias,   password,  e_mail,   gender, address,    bio  from  user u where u.user_name = ?1",nativeQuery = true)
+   List<PiaUser> findAllByUserName(String userName);
+
 
 
     /**
@@ -52,14 +54,14 @@ public interface PiaUserRepository extends CrudRepository<PiaUser,Long> {
      * @return
      */
    @Modifying
-   @Query("update user u set u.alias = ?1 ," +
+   @Query(value = "UPDATE User u SET u.alias = ?1 ," +
            "u.password = ?2 , " +
-           "u.e_mail=?3, " +
+           "u.e_mail= ?3, " +
            "u.gender = ?4, " +
-           "u.address=?5, " +
-           "u.bio = ?6, "+
-           "u.update_time=?7 " +
-           "where u.id_user = ?8")
+           "u.address= ?5, " +
+           "u.bio = ?6, " +
+           "u.update_time= ?7 " +
+           "WHERE u.id_user = ?8",nativeQuery = true)
     PiaUser updateUser(String alias, String password, String eMail, Gender gender,
                        String address, String bio, Date updateTime,Integer idUser);
 }
