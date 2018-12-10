@@ -1,6 +1,7 @@
 package com.rdd.pia.model;
 
 
+
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.*;
@@ -10,14 +11,13 @@ import java.util.Date;
  * @author mic
  */
 @Entity //JPA用的到
-@Table(name = "user")
-public class PiaUser {
+@Table(name = "user_archive")
+public class ArchivedPiaUser {
 
     private String userName;
     private String password;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)  //MySQL自增
     private Integer idUser;
 
     private String alias;
@@ -34,17 +34,56 @@ public class PiaUser {
     @Temporal(value = TemporalType.TIMESTAMP)//日期+时间
     private Date updateTime;
 
+    @Temporal(value = TemporalType.TIMESTAMP)//日期+时间
+    private  Date archiveTime;
+
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "archive_reason")
+    private ArchiveReason archiveReason;
+
+
     public void setIdUser(Integer idUser) {
         this.idUser = idUser;
     }
 
-    public PiaUser(Integer idUser,String userName, String password,  String alias, String eMail, Gender gender, String address, String bio, java.sql.Timestamp updateTime) {
+    /**
+     * @param piaUser
+     */
+    public ArchivedPiaUser(PiaUser piaUser) {
+        this.userName = piaUser.getUserName();
+        this.password = piaUser.getPassword();
+        this.alias = piaUser.getAlias();
+        this.eMail = piaUser.geteMail();
+        this.gender = piaUser.getGender();
+        this.address = piaUser.getAddress();
+        this.bio = piaUser.getBio();
+        this.updateTime = piaUser.getUpdateTime();
+        this.archiveTime = new Date();
+    }
+
+    public Date getArchiveTime() {
+        return archiveTime;
+    }
+
+    public void setArchiveTime(Date archiveTime) {
+        this.archiveTime = archiveTime;
+    }
+
+    public ArchiveReason getArchiveReason() {
+        return archiveReason;
+    }
+
+    public void setArchiveReason(ArchiveReason archiveReason) {
+        this.archiveReason = archiveReason;
+    }
+
+    public ArchivedPiaUser(String userName, String password, String alias, String eMail, Gender gender, String address, String bio, Date updateTime) {
         this.userName = userName;
         this.password = password;
-        this.idUser = idUser;
         this.alias = alias;
         this.eMail = eMail;
-        this.gender =  gender;
+        this.gender = gender;
         this.address = address;
         this.bio = bio;
         this.updateTime = updateTime;

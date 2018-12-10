@@ -2,14 +2,17 @@ package com.rdd.pia.services;
 
 import com.rdd.pia.dao.UserDao;
 import com.rdd.pia.model.ArchiveReason;
+import com.rdd.pia.model.ArchivedPiaUser;
 import com.rdd.pia.model.PiaUser;
 
+import com.rdd.pia.repositories.ArchiveUserJpaRepository;
+import com.rdd.pia.repositories.UserJpaRepository;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
+
 
 /**
  * @author mic
@@ -20,57 +23,55 @@ public class UserService {
     private final static Log log = LogFactory.getLog(UserService.class);
 
     @Autowired
-    private UserDao userDao;
+    UserJpaRepository userJpaRepository;
+    @Autowired
+    ArchiveUserJpaRepository archiveUserJpaRepository;
 
     public PiaUser getUserById(int id){
-        return userDao.getUserById(id);
+        if (log.isTraceEnabled()){
+            log.trace("getUserById():"+"获取用户");
+        }
+        return userJpaRepository.findById(id);
     }
 
-    public  PiaUser getUserByName(String name){
-        return  userDao.getUserByName(name);
+    public PiaUser getUserByName(String name) {
+        if (log.isTraceEnabled()){
+            log.trace("getUserByName():"+"获取用户");
+        }
+        return userJpaRepository.findByUserName(name);
     }
 
-
-    /** 新建用户
-     * @param user PiaUser
-     * @return  成功 True
-     */
-    public boolean createUser(PiaUser user){
-        if (getUserByName(user.getUserName())!= null) {
-            if (log.isTraceEnabled()){
-                log.trace("createUser():用户已存在！");
-            }
+    public boolean createUser(PiaUser piaUser) {
+        if (log.isTraceEnabled()){
+            log.trace("getUserByName():"+"获取用户");
+        }
+        try {userJpaRepository.save(piaUser);}
+        catch(Exception e){
+            log.trace(e.getMessage());
             return false;
         }
-        return userDao.createUser(user);
+
+        return  true;
     }
 
-    /** 修改用户信息  todo: 需要加入 旧密码验证/查询用户是否存在 等功能
-     * @param user PiaUser
-     * @return 成功 True
+    public boolean deleteUserById(Integer id) {
+        return false;
+    }
+
+
+    /****
+     * 归档用户信息
+     * @param id
+     * @return
      */
-    public boolean updateUser(PiaUser user) {
-        if (log.isTraceEnabled()){
-            log.trace("updateUser():更新用户信息");
+    public  boolean archiveUserById(Integer id,ArchiveReason reason) {
+        PiaUser user = userJpaRepository.findById(id);
+        ArchivedPiaUser archivedPiaUser = new ArchivedPiaUser(user);
+        archivedPiaUser.setArchiveReason(reason);
+        if (archivedPiaUser != null) {
+            archiveUserJpaRepository.save(archivedPiaUser);
+            return true;
         }
-        // 先归档
-        if (userDao.archiveUserById(user.getIdUser(), ArchiveReason.UPDATE_PROFILE)) {
-            return  userDao.updateUser(user);
-        }
-
         return false;
     }
-
-    public boolean deleteUserById(Integer id){
-        if (log.isTraceEnabled()){
-            log.trace("deleteUserById():删除用户信息");
-        }
-        // 先归档
-        if (userDao.archiveUserById(id, ArchiveReason.DELETE)) {
-            return  userDao.deleteUserById(id);
-        }
-
-        return false;
-    }
-
 }
