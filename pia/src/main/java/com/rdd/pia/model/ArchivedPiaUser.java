@@ -2,7 +2,7 @@ package com.rdd.pia.model;
 
 
 
-import org.springframework.data.annotation.Id;
+//import org.springframework.data.annotation.Id;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -11,30 +11,39 @@ import java.util.Date;
  * @author mic
  */
 @Entity //JPA用的到
-@Table(name = "user_archive")
+@Table(name = "user_archive",schema = "app")
 public class ArchivedPiaUser {
 
+    @Column(name = "user_name")
     private String userName;
+    @Column(name = "password")
     private String password;
 
     @Id
+    @Column(name="id_user")
     private Integer idUser;
 
+    @Column(name = "alias")
     private String alias;
+    @Column(name = "e_mail")
     private String eMail;
 
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "gender")
     private Gender gender;
 
+    @Column(name = "address")
     private String address;
+    @Column(name = "bio")
     private String bio;
 
 
     @Temporal(value = TemporalType.TIMESTAMP)//日期+时间
+    @Column(name = "update_time")
     private Date updateTime;
 
     @Temporal(value = TemporalType.TIMESTAMP)//日期+时间
+    @Column(name = "archive_time")
     private  Date archiveTime;
 
 
@@ -104,7 +113,8 @@ public class ArchivedPiaUser {
     public void setPassword(String password) {
         this.password = password;
     }
-
+    @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
     public int getIdUser() {
         return idUser;
     }

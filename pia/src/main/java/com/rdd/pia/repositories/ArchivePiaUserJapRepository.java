@@ -1,15 +1,12 @@
 package com.rdd.pia.repositories;
 
 import com.rdd.pia.model.ArchivedPiaUser;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
-
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * @author mic
  */
-@Repository
-public interface ArchiveUserJpaRepository  extends CrudRepository<ArchivedPiaUser,Long>{
+public interface ArchivePiaUserJapRepository extends JpaRepository<ArchivedPiaUser,Long> {
     /**
      * Saves a given entity. Use the returned instance for further operations as the save operation might have changed the
      * entity instance completely.

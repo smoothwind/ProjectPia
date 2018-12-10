@@ -1,11 +1,13 @@
 package com.rdd.pia.repositories;
 
+import com.rdd.pia.model.Gender;
 import com.rdd.pia.model.PiaUser;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -13,7 +15,7 @@ import java.util.List;
  * @author mic
  */
 @Repository
-public interface UserJpaRepository extends CrudRepository<PiaUser,Long> {
+public interface PiaUserRepository extends CrudRepository<PiaUser,Long> {
     /** 返回用户
      * @param idUser
      * @return
@@ -37,18 +39,27 @@ public interface UserJpaRepository extends CrudRepository<PiaUser,Long> {
    List<PiaUser> findAllByUserName(String username);
 
 
-    /** 更新 用户
-     * @param piaUser
+    /**
+     * 更新信息
+     * @param alias
+     * @param password
+     * @param eMail
+     * @param gender
+     * @param address
+     * @param bio
+     * @param updateTime
+     * @param idUser
      * @return
      */
    @Modifying
-   @Query("update user u set u.alias = #{#alias}," +
-           "u.password = #{#password}, " +
-           "u.e_mail=#{#eMail}," +
-           "u.gender = #{#gender}," +
-           "u.address=#{#address}," +
-           "u.bio = #{#bio},"+
-           "u.update_time= #{#updateTime} " +
-           "where u.id_user = #{#idUser}")
-    PiaUser updateUser(PiaUser piaUser);
+   @Query("update user u set u.alias = ?1 ," +
+           "u.password = ?2 , " +
+           "u.e_mail=?3, " +
+           "u.gender = ?4, " +
+           "u.address=?5, " +
+           "u.bio = ?6, "+
+           "u.update_time=?7 " +
+           "where u.id_user = ?8")
+    PiaUser updateUser(String alias, String password, String eMail, Gender gender,
+                       String address, String bio, Date updateTime,Integer idUser);
 }

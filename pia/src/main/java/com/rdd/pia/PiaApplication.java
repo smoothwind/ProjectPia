@@ -11,10 +11,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  * lalalalalla
  * @author mic
  */
-@MapperScan(basePackages = "com.rdd") //自动扫描mapper
-@ComponentScan(basePackages = "com") //自动扫描bean
+
+@ComponentScan(basePackages = {"com.rdd.pia.model"}) //自动扫描bean
 @EnableJpaRepositories(basePackages = "com.rdd.pia.repositories")/* 启动JPA */
-@EntityScan(basePackages="com.rdd.pia.model")
 @SpringBootApplication
 public class PiaApplication {
 

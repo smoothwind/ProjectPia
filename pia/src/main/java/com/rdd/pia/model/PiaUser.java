@@ -1,8 +1,7 @@
 package com.rdd.pia.model;
 
 
-import org.springframework.data.annotation.Id;
-
+//import org.springframework.data.annotation.Id;
 import javax.persistence.*;
 import java.util.Date;
 
@@ -10,28 +9,36 @@ import java.util.Date;
  * @author mic
  */
 @Entity //JPA用的到
-@Table(name = "user")
+@Table(name = "user",schema = "app")
 public class PiaUser {
 
+    @Column(name = "user_name")
     private String userName;
+    @Column(name = "password")
     private String password;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)  //MySQL自增
+    @Column(name = "id_user")
     private Integer idUser;
 
+    @Column(name = "alias")
     private String alias;
+    @Column(name = "e_mail")
     private String eMail;
 
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "gender")
     private Gender gender;
 
+    @Column(name = "address")
     private String address;
+    @Column(name = "bio")
     private String bio;
 
 
     @Temporal(value = TemporalType.TIMESTAMP)//日期+时间
+    @Column(name = "update_time")
     private Date updateTime;
 
     public void setIdUser(Integer idUser) {

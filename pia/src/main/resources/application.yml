@@ -9,15 +9,27 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+  data:
+    jpa:
+      repositories:
+        enabled: true
 
 
-mybatis.configuration.mapUnderscoreToCamelCase: true
+
+  jpa:
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+#mybatis.configuration.mapUnderscoreToCamelCase: true
+
+
 
 logging:
   file: target/app.log
   level:
     ROOT: INFO
-    com.rdd.pia: TRACE
+    com.rdd.pia: INFO
     com.rdd: INFO #只有为INFO时才能在控制台显示默认配置的一些打印信息，包括密码
 
 
