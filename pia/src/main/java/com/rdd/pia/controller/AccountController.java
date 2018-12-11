@@ -33,6 +33,7 @@ public class AccountController {
 
     @GetMapping("username/{userName}")
     public PiaUser getUser(@PathVariable("userName") String name){
+        log.trace("getUser():获取到用户");
         if(log.isTraceEnabled()){
             log.trace("getUser():获取到用户");
         }
@@ -67,5 +68,9 @@ public class AccountController {
         return map;
     }
   //org.apache.ibatis.type.EnumOrdinalTypeHandler
+    @GetMapping("/sayhi")
+    public String sayHi(){
+        return "Hi";
+    }
 
 }

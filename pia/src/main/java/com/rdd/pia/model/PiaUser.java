@@ -57,6 +57,9 @@ public class PiaUser {
         this.updateTime = updateTime;
     }
 
+    public PiaUser() {
+    }
+
     public String getUserName() {
         return userName;
     }

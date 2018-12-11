@@ -1,7 +1,4 @@
 spring:
-  cache:
-    redis:
-      time-to-live: 3600s #默认为从不过期
   datasource:
     url: jdbc:mysql://127.0.0.1/app?useUnicode=true&serverTimezone=UTC&characterEncoding=utf-8&allowMultiQueries=true
     username: admin
@@ -13,17 +10,10 @@ spring:
     jpa:
       repositories:
         enabled: true
-
-
-
   jpa:
     hibernate:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-
-#mybatis.configuration.mapUnderscoreToCamelCase: true
-
-
 
 logging:
   file: target/app.log
@@ -31,12 +21,3 @@ logging:
     ROOT: WARN
     com.rdd.pia: TRACE
 
-
-#redis:
-#  host: localhost
-#  port:6379
- # jedis:
- #   pool:
-  #    max-active: 5
-
-#      max-wait: 10000
