@@ -3,7 +3,6 @@ package com.rdd.pia.services;
 import com.rdd.pia.model.ArchiveReason;
 import com.rdd.pia.model.ArchivedPiaUser;
 import com.rdd.pia.model.PiaUser;
-
 import com.rdd.pia.repositories.ArchivePiaUserJapRepository;
 import com.rdd.pia.repositories.PiaUserRepository;
 import org.apache.commons.logging.Log;
@@ -11,8 +10,8 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 
-import org.springframework.boot.autoconfigure.data.jpa.*;
 /**
  * @author mic
  */
@@ -30,7 +29,7 @@ public class UserService {
         if (log.isTraceEnabled()){
             log.trace("getUserById():"+"获取用户");
         }
-        return piaUserRepository.findByIdUser(id);
+        return piaUserRepository.findTop1ByIdUser(id);
     }
 
     public PiaUser getUserByName(String name) {
@@ -44,7 +43,7 @@ public class UserService {
         if (log.isTraceEnabled()){
             log.trace("updateUser():"+"更新用户信息");
         }
-        PiaUser tmp = piaUserRepository.findByIdUser(piaUser.getIdUser());
+        PiaUser tmp = piaUserRepository.findTop1ByIdUser(piaUser.getIdUser());
         if(piaUser.equals(tmp) && piaUser != null && tmp != null){
             archiveUserJpaRepository.save(new ArchivedPiaUser(tmp));
             piaUserRepository.updateUser(piaUser.getAlias(),
@@ -85,7 +84,7 @@ public class UserService {
      * @return
      */
     public  boolean archiveUserById(Integer id,ArchiveReason reason) {
-        PiaUser user = piaUserRepository.findByIdUser(id);
+        PiaUser user = piaUserRepository.findTop1ByIdUser(id);
         ArchivedPiaUser archivedPiaUser = new ArchivedPiaUser(user);
         archivedPiaUser.setArchiveReason(reason);
         if (archivedPiaUser != null) {

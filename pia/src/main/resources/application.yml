@@ -28,10 +28,9 @@ spring:
 logging:
   file: target/app.log
   level:
-    ROOT: INFO
-    com.rdd.pia: INFO
-    com.rdd.pia.filter: INFO
-    com.rdd.pia.services: INFO
+    ROOT: WARN
+    com.rdd.pia: TRACE
+
 
 #redis:
 #  host: localhost

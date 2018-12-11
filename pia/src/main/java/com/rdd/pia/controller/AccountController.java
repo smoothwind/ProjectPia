@@ -9,13 +9,14 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * @author mic
  */
 @RestController
-@RequestMapping("Account")
+@RequestMapping("/Account")
 public class AccountController {
 
     public final static Log log = LogFactory.getLog(AccountController.class);
@@ -23,11 +24,11 @@ public class AccountController {
     private UserService userService;
 
     @GetMapping("user/{userId}")
-    public PiaUser getUser(@PathVariable("userId") int id){
+    public PiaUser getUser(@PathVariable("userId") Integer id){
         if(log.isTraceEnabled()){
             log.trace("getUser():获取用户");
         }
-        return userService.getUserById(id);
+        return  userService.getUserById(id);
     }
 
     @GetMapping("username/{userName}")

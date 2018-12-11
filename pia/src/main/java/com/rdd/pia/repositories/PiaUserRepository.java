@@ -22,7 +22,7 @@ public interface PiaUserRepository extends CrudRepository<PiaUser,Long> {
      * Warning: 如果方法不写具体的SQl 在@Query注解里，那么请遵守jpa方法命名规则
      */
    @Query
-   PiaUser findByIdUser(Integer idUser);
+   PiaUser findTop1ByIdUser(Integer idUser);
 
     /** 返回用户
      * @param userName
