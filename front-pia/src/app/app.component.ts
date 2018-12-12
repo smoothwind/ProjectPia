@@ -1,10 +1,30 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { PiaUser } from './model/pia-user';
+import { UserService } from './user.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
-})
+ })
+// export class AppComponent implements OnInit {
+//   user: PiaUser;
+//   constructor( private userService: UserService) { }
+//
+//   getUserInfo() {
+//       console.log('AppComponent. getUserInfo');
+//       this.userService.getUserByID(1).subscribe((data: PiaUser) => this.user = data);
+//
+//     }
+//
+//
+//
+//   ngOnInit() {
+//     console.log('AppComponent. ngOnInit');
+//     this.getUserInfo();
+//   }
+// }
 export class AppComponent {
-  title = 'front-pia';
+  title = 'hello,world';
+  constructor() { }
 }

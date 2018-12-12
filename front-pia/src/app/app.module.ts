@@ -5,7 +5,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
-
+import { HttpClientModule } from '@angular/common/http';
+import {UserService} from './user.service';
+import {ArtileService} from './artile.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -14,9 +16,13 @@ import { ProfileComponent } from './profile/profile.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    LoginComponent,
+    AppComponent,
+    ProfileComponent
   ],
-  providers: [],
+  providers: [UserService, ArtileService, ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
