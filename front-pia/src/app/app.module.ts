@@ -22,7 +22,7 @@ import {ArtileService} from './artile.service';
     AppComponent,
     ProfileComponent
   ],
-  providers: [UserService, ArtileService, ],
+  providers: [UserService, ArtileService, AppComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

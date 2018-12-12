@@ -1,6 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { PiaUser } from './model/pia-user';
-import { UserService } from './user.service';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',

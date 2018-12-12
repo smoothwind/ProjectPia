@@ -8,12 +8,12 @@ import { PiaUser } from './model/pia-user';
   providedIn: 'root'
 })
 export class UserService {
-  
-  constructor(private logger: NodeLogger,private http: HttpClient) { 
+
+  constructor(private logger: NodeLogger, private http: HttpClient) {
 
   }
 
-  getUserByID(id: Number){
-    return this.http.get<PiaUser>( global.base_url+":"+global.port+"/Accout/user/"+id);
+  getUserByID(id: Number) {
+    return this.http.get<PiaUser>( global.base_url + ':' + global.port + '/Accout/user/' + id);
   }
 }
