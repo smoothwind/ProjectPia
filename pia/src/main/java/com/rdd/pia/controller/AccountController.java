@@ -15,6 +15,7 @@ import java.util.Map;
 /**
  * @author mic
  */
+@CrossOrigin(allowCredentials = "false") //jiejue "CORS 头缺少 'Access-Control-Allow-Origin'"
 @RestController
 @RequestMapping("/Account")
 public class AccountController {
@@ -31,7 +32,7 @@ public class AccountController {
         return  userService.getUserById(id);
     }
 
-    @GetMapping("username/{userName}")
+    @GetMapping(value = "username/{userName}")
     public PiaUser getUser(@PathVariable("userName") String name){
         log.trace("getUser():获取到用户");
         if(log.isTraceEnabled()){

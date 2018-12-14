@@ -1,19 +1,20 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule }    from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 import { HttpClientModule } from '@angular/common/http';
 import { UserService } from './user.service';
 import { ArtileService } from './artile.service';
+import { AccountComponent } from './account/account.component';
+
 @NgModule({
   declarations: [ // 本模块定义的组件、指令、管道，模块内部使用的类
     AppComponent,
-    LoginComponent,
-    ProfileComponent,
+    AccountComponent,
+    ProfileComponent
   ],
   imports: [  // Angular 提供的模块
     BrowserModule,

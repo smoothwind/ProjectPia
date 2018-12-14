@@ -26,9 +26,14 @@ import { RouterOutlet } from '@angular/router';
 // }
 export class AppComponent {
   title = 'hello,world';
+  username = 'tester';
   constructor() { }
 
   getAnimationData(outlet: RouterOutlet) {
     return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
   }
+  isLogin(): boolean{
+    return false;
+  }
+
 }
