@@ -44,6 +44,7 @@ public class AccountController {
     /** 注册成功返回注册的对象
      * @param piaUser JSON 表单 包含注册用户所需要的所有信息
      * @return piaUser
+     *  //@RequestBody 是将json描述的对象绑定到相应的bean上
      */
     @PostMapping("/signUp")
     public Map<String,PiaUser> createUser(@Valid @RequestBody PiaUser piaUser){
@@ -72,6 +73,14 @@ public class AccountController {
     @GetMapping("/sayhi")
     public String sayHi(){
         return "Hi";
+    }
+
+    @PostMapping("/signIn")
+    public Map<String,PiaUser> signIn(@PathVariable){
+        if(log.isTraceEnabled()){
+            log.trace("getUser():获取用户");
+        }
+        return  userService.getUserByName()
     }
 
 }

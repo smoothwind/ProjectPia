@@ -1,7 +1,9 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import * as global from './global';
-import { PiaUser } from './model/pia-user';
+import {PiaUser} from './model/pia-user';
+import {EPiaErrCode} from './model/enums';
+
 
 @Injectable({
   providedIn: 'root'
@@ -45,6 +47,24 @@ export class UserService {
       this.currentActivedUserId = idUser;
     }
   }
-  // TODO: 登录
+  // 用户登录
+  logIn (username: String, password: String): EPiaErrCode {
+    if (username.trim().length === 0 || password.trim().length === 0) {
+      return EPiaErrCode.WRONG_PASSCODE_USERNAME;
+    }
+    // this.http.post<Map<String, PiaUser>>()(global.base_url + ':' + global.port + '/Account/signIn');
+    // TODO: 知识点 post方法定义中 I typescript 允许制定多个类型，多个类型之间用| 分开。 方法可以接收或返回多种类型的指
+      let response: number | PiaUser;
+      this.http.post<PiaUser | number>(global.base_url + ':' + global.port + '/Account/signIn',
+      JSON.stringify({'username': username, 'password': password}),
+      {'headers': {'Content-Type': 'application/json'}}
+      ).subscribe(data => response = data);
 
+      /*
+      if (response.) {
+
+      }*/
+
+    return EPiaErrCode.SUCCESS;
+  }
 }
