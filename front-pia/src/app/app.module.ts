@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { UserService } from './user.service';
 import { ArtileService } from './artile.service';
 import { AccountComponent } from './account/account.component';
+import { UserStateService } from './userstate.service';
 
 @NgModule({
   declarations: [ // 本模块定义的组件、指令、管道，模块内部使用的类
@@ -23,7 +24,7 @@ import { AccountComponent } from './account/account.component';
     FormsModule,
     BrowserAnimationsModule
   ],
-  providers: [UserService, ArtileService], // 服务
+  providers: [UserService, ArtileService, UserStateService], // 服务
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,6 +1,7 @@
 package com.rdd.pia.controller;
 
 import com.rdd.pia.model.PiaUser;
+import com.rdd.pia.model.UserLoginParams;
 import com.rdd.pia.services.UserService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -76,11 +77,30 @@ public class AccountController {
     }
 
     @PostMapping("/signIn")
-    public Map<String,PiaUser> signIn(@PathVariable){
+    public Map<String,Object> signIn(@RequestBody UserLoginParams userLoginParams){
+        Map<String, Object> response = new HashMap<>();
         if(log.isTraceEnabled()){
             log.trace("getUser():获取用户");
         }
-        return  userService.getUserByName()
+
+        if(userLoginParams.getPassword().trim().equals("") || userLoginParams.getUsername().trim().equals(""))
+        {
+            response.put("retCode", new String("用户名或密码为空!"));
+            return response;
+        }
+
+        PiaUser user = userService.getUserByName(userLoginParams.getUsername());
+
+        if(!userLoginParams.getPassword().equals(user.getPassword()) || !userLoginParams.getUsername().equals(user.getUserName())){
+            response.put("retCode", new String("用户名或密码错误!"));
+            if(log.isTraceEnabled()){
+                log.trace("");
+            }
+            return response;
+        }
+        response.put("retCode","success");
+        response.put("user", user);
+        return response;
     }
 
 }

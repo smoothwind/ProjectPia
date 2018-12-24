@@ -1,8 +1,9 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import * as global from './global';
-import {PiaUser} from './model/pia-user';
-import {EPiaErrCode} from './model/enums';
+import { PiaUser } from './model/pia-user';
+import { EPiaErrCode } from './model/enums';
+import { environment } from 'src/environments/environment.prod';
 
 
 @Injectable({
@@ -11,7 +12,7 @@ import {EPiaErrCode} from './model/enums';
 export class UserService {
 
   // 管理登录用户
-  loginedUser: Map<number, PiaUser> = new Map<number, PiaUser> ();
+  loginedUser: Map<number, PiaUser> = new Map<number, PiaUser>();
   currentActivedUserId = -1;
 
   constructor(private http: HttpClient) {
@@ -19,15 +20,18 @@ export class UserService {
   }
 
   getUserByID(id: Number) {
-    return this.http.get<PiaUser>( global.base_url + ':' + global.port + '/Account/user/' + id);
+    return this.http.get<PiaUser>(global.base_url + ':' + global.port + '/Account/user/' + id);
   }
 
   getUserByName(name: String) {
     return this.http.get<PiaUser>(global.base_url + ':' + global.port + '/Account/username/' + name);
   }
-
+  // 获取当前登录用户
+  getCurrentUser(): PiaUser {
+    return this.loginedUser.get(this.currentActivedUserId);
+  }
   // 设置当前登录用户
-  setCurrentUser(user: PiaUser ) {
+  setCurrentUser(user: PiaUser) {
     this.currentActivedUserId = user.idUser;
     if (!this.loginedUser.has(user.idUser)) {
 
@@ -48,23 +52,40 @@ export class UserService {
     }
   }
   // 用户登录
-  logIn (username: String, password: String): EPiaErrCode {
+  logIn(username: String, password: String): EPiaErrCode {
+    console.log('UserServices: 登录中。。。');
     if (username.trim().length === 0 || password.trim().length === 0) {
       return EPiaErrCode.WRONG_PASSCODE_USERNAME;
     }
     // this.http.post<Map<String, PiaUser>>()(global.base_url + ':' + global.port + '/Account/signIn');
-    // TODO: 知识点 post方法定义中 I typescript 允许制定多个类型，多个类型之间用| 分开。 方法可以接收或返回多种类型的指
-      let response: number | PiaUser;
-      this.http.post<PiaUser | number>(global.base_url + ':' + global.port + '/Account/signIn',
-      JSON.stringify({'username': username, 'password': password}),
-      {'headers': {'Content-Type': 'application/json'}}
-      ).subscribe(data => response = data);
+    // TODO: 知识点 post方法定义中 I typescript 允许制定多个类型，多个类型之间用| 分开。 方法可以接收或返回多种类型的
+    let user: PiaUser;
+    let code: String;
+    (this.http.post<Map<String, Object>>(global.base_url + ':' + global.port + '/Account/signIn',
+      JSON.stringify({ 'username': username, 'password': password }),
+      { 'headers': { 'Content-Type': 'application/json' } })).subscribe(data => {
+        code = data['retCode'];
 
-      /*
-      if (response.) {
+        console.log('retCode: ' + code);
 
-      }*/
+        if (code === 'success') {
+          // 设置对象属性
+          user = new PiaUser();
+          user.idUser = data['user'].idUser;
+          user.userName = data['user'].userName;
+          user.password = data['user'].password;
+          user.gender = data['user'].gender;
+          user.eMail = data['user'].eMail;
+          user.address = data['user'].address;
+          user.bio = data['user'].bio;
+          user.updateTime = data['user'].updateTime;
+          this.setCurrentUser(user);
+        } else {
+          return EPiaErrCode.FAILED;
+        }
+      });
 
+    console.log('UserServices: 登录调用API结束。。。');
     return EPiaErrCode.SUCCESS;
   }
 }
