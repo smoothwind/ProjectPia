@@ -1,9 +1,8 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 import * as global from './global';
-import { PiaUser } from './model/pia-user';
-import { EPiaErrCode } from './model/enums';
-import { environment } from 'src/environments/environment.prod';
+import {PiaUser} from './model/pia-user';
+import {EPiaErrCode} from './model/enums';
 
 
 @Injectable({
@@ -26,6 +25,7 @@ export class UserService {
   getUserByName(name: String) {
     return this.http.get<PiaUser>(global.base_url + ':' + global.port + '/Account/username/' + name);
   }
+
   // 获取当前登录用户
   getCurrentUser(): PiaUser {
     return this.loginedUser.get(this.currentActivedUserId);
@@ -51,6 +51,44 @@ export class UserService {
       this.currentActivedUserId = idUser;
     }
   }
+
+  signUp(user : PiaUser): EPiaErrCode {
+    let nuser: PiaUser;
+    let code: String;
+    if (this.getUserByName(user.userName) === null) {
+      (this.http.post<PiaUser>(global.base_url + ':' + global.port + '/Account/signUp/',JSON.stringify({'idUser:':'','userName':user.userName,
+        'password':user.password, 'eMail':user.eMail,
+        'gender':user.gender,
+        'address':user.address,
+        'bio': user.bio
+      }),{ 'headers': { 'Content-Type': 'application/json' }})).subscribe(
+        data => {
+          code = data['retCode'];
+
+          console.log('retCode: ' + code);
+
+          if (code === 'success') {
+            // 设置对象属性
+            nuser = new PiaUser();
+            nuser.idUser = data['user'].idUser;
+            nuser.userName = data['user'].userName;
+            nuser.password = data['user'].password;
+            nuser.gender = data['user'].gender;
+            nuser.eMail = data['user'].eMail;
+            nuser.address = data['user'].address;
+            nuser.bio = data['user'].bio;
+            nuser.updateTime = data['user'].updateTime;
+            this.setCurrentUser(nuser);
+          } else {
+            return EPiaErrCode.FAILED;
+          }
+        }
+      );
+      return EPiaErrCode.SUCCESS;
+    }
+    return EPiaErrCode.FAILED;
+  }
+
   // 用户登录
   logIn(username: String, password: String): EPiaErrCode {
     console.log('UserServices: 登录中。。。');

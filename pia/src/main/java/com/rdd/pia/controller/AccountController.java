@@ -47,15 +47,16 @@ public class AccountController {
      * @return piaUser
      *  //@RequestBody 是将json描述的对象绑定到相应的bean上
      */
-    @PostMapping("/signUp")
-    public Map<String,PiaUser> createUser(@Valid @RequestBody PiaUser piaUser){
+    @PostMapping(value = "/signUp")
+    public Map<String,Object> createUser(@Valid @RequestBody PiaUser piaUser){
         if (log.isTraceEnabled())
         {
             log.trace("createUser(): 创建用户");
         }
 
-        Map<String,PiaUser> map = new HashMap<>();
+        Map<String,Object> map = new HashMap<>();
         if (userService.createUser(piaUser)){
+            map.put("retCode","success");
             map.put("Message",piaUser);
             if (log.isTraceEnabled())
             {
@@ -63,14 +64,14 @@ public class AccountController {
             }
             return map;
         }
-        map.put("Error",null);
+        map.put("retCode","false");
         if (log.isTraceEnabled())
         {
             log.trace("createUser(): 创建失败");
         }
         return map;
     }
-  //org.apache.ibatis.type.EnumOrdinalTypeHandler
+  // org.apache.ibatis.type.EnumOrdinalTypeHandler
     @GetMapping("/sayhi")
     public String sayHi(){
         return "Hi";

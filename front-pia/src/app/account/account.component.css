@@ -1,0 +1,11 @@
+#account_page
+{
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+  background: aliceblue;
+  filter:alpha(Opacity=80);-moz-opacity:0.9;opacity: 0.9;
+}
+input{
+  margin-bottom: 3px;
+}
