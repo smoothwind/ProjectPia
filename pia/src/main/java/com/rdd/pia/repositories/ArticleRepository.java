@@ -49,12 +49,8 @@ public interface ArticleRepository extends JpaRepository<Article,Long> {
     @Query
     boolean deleteArticleByIdArticleEquals(int articleId);
 
-    /** 逻辑删除
-     * @param articleId 文章ID
-     * @return 是否成功
-     */
-    @Query()
-    boolean logicDeleteArticleByArticleId(int articleId);
+
+    // TODO: boolean logicDeleteArticleByArticleId(int articleId);
 
     /////////////// 文章更新 ///////////
 

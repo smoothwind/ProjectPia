@@ -1,4 +1,6 @@
-<div id="account_page" class="center-block" [ngSwitch]="category">
+<div id="account_page" class="center-block" [ngSwitch]="category" >
+  <!--错误提示-->
+  <!--<app-list-errors [errors]="errors"></app-list-errors>-->
   <!-- 登录窗口 -->
   <div id="sign_in_panel" class="" *ngSwitchCase="'SIGNIN'">
     <div class="">
@@ -7,7 +9,7 @@
           <h1 class="text-center">登录</h1>
         </div>
         <div class="">
-          <form class="form-group" (ngSubmit)="signIn()">
+          <form class="form-group" (ngSubmit)="signIn()" >
             <div class="form-group">
               <label>用户名</label>
               <input class="form-control" type="text" placeholder="请输入用户名" [(ngModel)] = "username" name = "name" >
@@ -22,8 +24,8 @@
               </label>
             </div>
             <div class="text-right">
-              <button class="btn btn-primary" type="submit">登录</button> &nbsp;
-              <button class="btn btn-danger">取消</button>
+              <button class="btn btn-primary" [disabled]="!isSubmitting" type="submit">登录</button> &nbsp;
+              <button class="btn btn-danger" [disabled]="!isSubmitting" >取消</button>
             </div>
             <a (click)="changePageToSignUp()">还没有账号？点我注册</a>
           </form>
@@ -43,7 +45,21 @@
           <form class="form-group" (ngSubmit)="signUp()">
             <div class="form-group">
               <label>用户名</label>
-              <input class="form-control" type="text" placeholder="6-15位字母或数字" [(ngModel)] = "username" name = "username">
+              <input class="form-control" type="text" placeholder="6-15位字母或数字" [(ngModel)] = "username" name = "name">
+            </div>
+
+            <div class="form-group">
+              <label>密码</label>
+              <input class="form-control" type="password" placeholder="至少6位字母或数字" [(ngModel)] = "password"  name = "password">
+            </div>
+            <!--
+            <div class="form-group">
+              <label>bio</label>
+              <input class="form-control" type="text" placeholder="bio" [(ngModel)] = "bio" name = "bio">
+            </div>
+            <div class="form-group">
+              <label>地址</label>
+              <input class="form-control" type="text" placeholder="请输入地址" [(ngModel)] = "address" name = "address">
             </div>
             <div class="form-group">
               <label>密码</label>
@@ -63,17 +79,15 @@
             </div>
             <div class="form-group">
               <label>邮箱</label>
-              <input class="form-control" type="email" placeholder="例如:123@123.com" [(ngModel)] = "email"  name ="mail">
-            </div>
-
+              <input class="form-control" type="email" placeholder="例如:123@123.com" [(ngModel)] = "email"  name ="email">
+            </div>-->
             <div class="text-left">
               <a (click)="changePageToSignIn()">已有账号？点我登录</a>
             </div>
             <div class="text-right">
-              <button class="btn btn-primary" type="submit">提交</button>&nbsp;
-              <button class="btn btn-danger" data-dismiss="">取消</button>
+              <button class="btn btn-primary" type="submit" [disabled]="!isSubmitting">提交</button>&nbsp;
+              <button class="btn btn-danger" type="reset" [disabled]="!isSubmitting">取消</button>
             </div>
-
           </form>
         </div>
       </div>

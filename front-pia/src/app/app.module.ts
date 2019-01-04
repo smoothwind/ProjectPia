@@ -4,18 +4,16 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ProfileComponent } from './profile/profile.component';
 import { HttpClientModule } from '@angular/common/http';
-import { UserService } from './user.service';
-import { ArtileService } from './artile.service';
-import { AccountComponent } from './account/account.component';
-import { UserStateService } from './userstate.service';
+import { UserService } from './core/services/user.service';
+import { ArtileService } from './core/services/artile.service';
+import { AccountComponent } from './auth/account.component';
+import { UserStateService } from './core/services/userstate.service';
 
 @NgModule({
   declarations: [ // 本模块定义的组件、指令、管道，模块内部使用的类
     AppComponent,
     AccountComponent,
-    ProfileComponent
   ],
   imports: [  // Angular 提供的模块
     BrowserModule,

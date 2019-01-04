@@ -92,10 +92,10 @@ public class AccountController {
 
         PiaUser user = userService.getUserByName(userLoginParams.getUsername());
 
-        if(!userLoginParams.getPassword().equals(user.getPassword()) || !userLoginParams.getUsername().equals(user.getUserName())){
+        if(user == null || !userLoginParams.getPassword().equals(user.getPassword()) || !userLoginParams.getUsername().equals(user.getUserName())){
             response.put("retCode", new String("用户名或密码错误!"));
             if(log.isTraceEnabled()){
-                log.trace("");
+                log.trace("返回数据:"+response);
             }
             return response;
         }

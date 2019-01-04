@@ -1,6 +1,0 @@
-export enum EPiaErrCode {
-  SUCCESS,
-  FAILED,
-  NO_SUCH_USER,
-  WRONG_PASSCODE_USERNAME,
-}
