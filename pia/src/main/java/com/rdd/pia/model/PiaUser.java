@@ -3,22 +3,27 @@ package com.rdd.pia.model;
 
 //import org.springframework.data.annotation.Id;
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * @author mic
  */
-@Entity //JPA用的到
+@Entity // JPA用的到
 @Table(name = "user")
-public class PiaUser {
+public class PiaUser implements Serializable {
+
+    private static final long serialVersionUID = -9102021104172019999L;
 
     @Column(name = "user_name")
     private String userName;
     @Column(name = "password")
     private String password;
-
+    /**
+     * MySQL自增ID
+     */
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)  //MySQL自增
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_user")
     private Integer idUser;
 
@@ -36,8 +41,10 @@ public class PiaUser {
     @Column(name = "bio")
     private String bio;
 
-
-    @Temporal(value = TemporalType.TIMESTAMP)//日期+时间
+    /**
+     * 日期+时间
+     */
+    @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "update_time")
     private Date updateTime;
 
@@ -45,6 +52,17 @@ public class PiaUser {
         this.idUser = idUser;
     }
 
+    /**
+     * @param idUser 用户ID
+     * @param userName 用户名
+     * @param password 密码
+     * @param alias 别称
+     * @param eMail 邮箱
+     * @param gender 性别
+     * @param address 地址
+     * @param bio 签名
+     * @param updateTime 更新时间
+     */
     public PiaUser(Integer idUser,String userName, String password,  String alias, String eMail, Gender gender, String address, String bio, java.sql.Timestamp updateTime) {
         this.userName = userName;
         this.password = password;

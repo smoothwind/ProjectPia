@@ -14,10 +14,22 @@ spring:
     hibernate:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  cache:
+    redis:
+      time-to-live: 6000s # 默认是从不过期
+      key-prefix: key- # key前缀
+      use-key-prefix: true # 是否使用key前缀
+  redis:
+    host: localhost
+    port: 6379
+    jedis:
+      pool:
+        max-active: 5
+        max-idle: 10
+        max-wait: 10000
 
 logging:
   file: target/app.log
   level:
     ROOT: WARN
     com.rdd.pia: TRACE
-

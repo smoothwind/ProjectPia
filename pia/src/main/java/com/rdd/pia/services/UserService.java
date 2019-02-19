@@ -8,14 +8,17 @@ import com.rdd.pia.repositories.PiaUserRepository;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @author mic
  */
 @Service
+@CacheConfig(cacheNames = "user")
 public class UserService {
     private final static Log log = LogFactory.getLog(UserService.class);
 
@@ -25,6 +28,7 @@ public class UserService {
     @Autowired
     private ArchivePiaUserJapRepository archiveUserJpaRepository;
 
+    @CachePut(cacheNames = "user",key = "#id")
     public PiaUser getUserById(Integer id){
         if (log.isTraceEnabled()){
             log.trace("getUserById():"+"获取用户");
@@ -32,19 +36,21 @@ public class UserService {
         return piaUserRepository.findTop1ByIdUser(id);
     }
 
+    @Cacheable(cacheNames = "user")
     public PiaUser getUserByName(String name) {
         if (log.isTraceEnabled()){
-            log.trace("getUserByName():"+"获取用户");
+            log.trace("getUserByName():" + "获取用户");
         }
         return piaUserRepository.findByUserName(name);
     }
 
+    @Cacheable(cacheNames = "user",key = "#piaUser")
     public boolean updateUser(PiaUser piaUser){
         if (log.isTraceEnabled()){
             log.trace("updateUser():"+"更新用户信息");
         }
         PiaUser tmp = piaUserRepository.findTop1ByIdUser(piaUser.getIdUser());
-        if(piaUser.equals(tmp) && piaUser != null && tmp != null){
+        if(piaUser.equals(tmp)){
             archiveUserJpaRepository.save(new ArchivedPiaUser(tmp));
             piaUserRepository.updateUser(piaUser.getAlias(),
                     piaUser.getPassword(),
@@ -59,6 +65,7 @@ public class UserService {
         return false;
     }
 
+    @CachePut(cacheNames = "user",key = "#piaUser.idUser")
     public boolean createUser(PiaUser piaUser) {
         if (log.isTraceEnabled()){
             log.trace("getUserByName():"+"获取用户");
@@ -72,11 +79,10 @@ public class UserService {
 
         return  true;
     }
-
+    @CacheEvict(cacheNames = "user")
     public boolean deleteUserById(Integer id) {
         return false;
     }
-
 
     /****
      * 归档用户信息
