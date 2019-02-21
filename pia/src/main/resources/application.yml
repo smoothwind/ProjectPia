@@ -1,8 +1,8 @@
 spring:
   datasource:
     url: jdbc:mysql://127.0.0.1/app?useUnicode=true&serverTimezone=UTC&characterEncoding=utf-8&allowMultiQueries=true
-    username: app_admin
-    password: app_admin
+    username:
+    password:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
